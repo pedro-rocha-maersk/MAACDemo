@@ -21,7 +21,9 @@ function App() {
     shippingMethod: "Standard",
   });
 
-  const [label, setLabel] = useState("x");
+  const [label, setLabel] = useState("");
+
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +46,19 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (
+      formData.name === "" ||
+      formData.address === "" ||
+      formData.city === "" ||
+      formData.state === "" ||
+      formData.zip === "" ||
+      formData.phone === ""
+    ) {
+      setError("Please fill in all the fields");
+      return;
+    }
+
     const data = {
       Carrier: "Maersk",
       ServiceType: formData.shippingMethod,
@@ -54,7 +69,7 @@ function App() {
       PreferredFormat: 3,
       PreferredSize: 0,
       PreferredDPI: 0,
-      ShipDate: new Date().toISOString(),
+      ShipDate: "2024-04-30T17:58:40.409Z",
       toAddress: {
         isResidential: true,
         description: "To address",
@@ -123,15 +138,20 @@ function App() {
       );
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        setError(
+          "An error occurred while generating the label. Please try again later."
+        );
+        return;
       }
 
       const result = await response.json();
       console.log("Form submitted successfully:", result);
       alert("Form submitted successfully!");
     } catch (error) {
-      console.error("Error submitting the form:", error);
-      alert("Error submitting the form");
+      setError(
+        "An error occurred while generating the label. Please try again later."
+      );
+      return;
     }
   };
 
@@ -254,6 +274,7 @@ function App() {
                       </div>
                     </div>
                   </div>
+                  {error && <div className="error">{error}</div>}
                   <button type="submit" className="form-submit">
                     Submit
                   </button>
