@@ -184,7 +184,7 @@ function App() {
       console.log("label", label);
 
       const labelImageResponse = await fetch(
-        `http://api.labelary.com/v1/printers/8dpmm/labels/4x6/0/`,
+        `https://api.labelary.com/v1/printers/8dpmm/labels/4x6/0/`,
         {
           method: "POST",
           headers: {
