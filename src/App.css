@@ -313,3 +313,24 @@
   display: flex;
   margin-bottom: 0px;
 }
+.label-preview {
+  width: 350px;
+}
+
+.label-preview-container {
+  display: flex;
+  width: 100%;
+  margin-top: 64px;
+  justify-content: center;
+}
+.label-print {
+  margin-left: 64px;
+  height: 32px;
+  width: 32px;
+  background: white;
+  outline: none;
+  border: 1px solid #c3c3c3;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}

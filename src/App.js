@@ -28,6 +28,19 @@ function App() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setError("");
+  };
+
+  const printImage = () => {
+    if (label) {
+      const printWindow = window.open(
+        document.getElementById("label-preview").src,
+        "_blank"
+      );
+      printWindow.onload = function () {
+        printWindow.print();
+      };
+    }
   };
 
   const reset = () => {
@@ -69,7 +82,7 @@ function App() {
       PreferredFormat: 3,
       PreferredSize: 0,
       PreferredDPI: 0,
-      ShipDate: "2024-04-30T17:58:40.409Z",
+      ShipDate: "2024-04-31T16:58:40.409Z",
       toAddress: {
         isResidential: true,
         description: "To address",
@@ -83,7 +96,7 @@ function App() {
         country: "US",
         option: 0,
         name: formData.name,
-        company: "string",
+        company: "BodyGuardz",
         phone: formData.phone,
         email: "info@sample.com",
       },
@@ -145,8 +158,54 @@ function App() {
       }
 
       const result = await response.json();
-      console.log("Form submitted successfully:", result);
-      alert("Form submitted successfully!");
+      console.log("result", result);
+      console.log("result package", result["package"]);
+
+      if (
+        !(
+          result &&
+          result["package"] &&
+          result["package"].length > 0 &&
+          result["package"][0]["labels"] &&
+          result["package"][0]["labels"].length > 0 &&
+          result["package"][0]["labels"][0]["label"]
+        )
+      ) {
+        console.log("Did not get label");
+        setError(
+          "An error occurred while generating the label. Please try again later."
+        );
+        return;
+      }
+
+      const encodedLabel = result["package"][0]["labels"][0]["label"];
+      console.log("encodedLabel", encodedLabel);
+      const label = atob(encodedLabel);
+      console.log("label", label);
+
+      const labelImageResponse = await fetch(
+        `http://api.labelary.com/v1/printers/8dpmm/labels/4x6/0/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: JSON.stringify(label),
+        }
+      );
+
+      if (!labelImageResponse.ok) {
+        console.log("Did not get label image");
+        setError(
+          "An error occurred while generating the label. Please try again later."
+        );
+        return;
+      }
+
+      const labelImageBlob = await labelImageResponse.blob();
+      const labelImageUrl = URL.createObjectURL(labelImageBlob);
+      console.log("labelImageUrl", labelImageUrl);
+      setLabel(labelImageUrl);
     } catch (error) {
       setError(
         "An error occurred while generating the label. Please try again later."
@@ -285,7 +344,7 @@ function App() {
               <div className="product-item-wrapper">
                 <div className="product-item-image">
                   <img
-                    class="product-image"
+                    className="product-image"
                     src="https://www.bodyguardz.com/dw/image/v2/BDCW_PRD/on/demandware.static/-/Sites-nlu_products/default/dw8783579a/images/apple/iPhone15/iPhone15/pure-3-privacy/1-bgz-pure3privacy-iphone15-hero.jpg?sw=70&amp;sfrm=jpg"
                     alt="Pure 3 Privacy Screen Protector for iPhone 15/15 Pro, , large"
                     title="Pure 3 Privacy Screen Protector for iPhone 15/15 Pro, "
@@ -335,6 +394,17 @@ function App() {
               {"<"}
             </button>
             Label Preview
+          </div>
+          <div className="label-preview-container">
+            <img
+              id="label-preview"
+              src={label}
+              className="label-preview"
+              alt="label"
+            />
+            <button className="label-print" onClick={() => printImage()}>
+              🖨️
+            </button>
           </div>
         </div>
       )}
