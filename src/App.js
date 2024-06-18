@@ -7,7 +7,7 @@ function App() {
     { name: "Canada", code: "CA" },
     { name: "Denmark", code: "DK" },
     { name: "United Kingdom", code: "GB" },
-    { name: "United States", code: "US" },
+    { name: "US", code: "US" },
   ];
 
   const [formData, setFormData] = useState({
