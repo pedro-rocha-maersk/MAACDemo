@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  const countries = [
-    { name: "Australia", code: "AU" },
-    { name: "Canada", code: "CA" },
-    { name: "Denmark", code: "DK" },
-    { name: "United Kingdom", code: "GB" },
-    { name: "US", code: "US" },
-  ];
+  const countries = [{ name: "US", code: "US" }];
 
   const [formData, setFormData] = useState({
     name: "",
@@ -75,11 +69,11 @@ function App() {
     const data = {
       Carrier: "Maersk",
       ServiceType: formData.shippingMethod,
-      UniqueRequestId: "054325-ATL-ATL-NDC-202",
+      UniqueRequestId: `MAACDEMO-${new Date().getTime()}`,
       IntegratorClientID: "NETWORK PARCEL",
       CustomText1: "custom-t1",
       CustomText2: "custom-t2",
-      PreferredFormat: 3,
+      PreferredFormat: 2,
       PreferredSize: 0,
       PreferredDPI: 0,
       ShipDate: "2024-04-31T16:58:40.409Z",

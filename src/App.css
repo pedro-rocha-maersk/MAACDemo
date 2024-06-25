@@ -315,6 +315,7 @@
 }
 .label-preview {
   width: 350px;
+  transform: rotate(180deg);
 }
 
 .label-preview-container {
