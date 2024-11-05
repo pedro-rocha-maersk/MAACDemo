@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-optical-sizing: auto;
 }
 .error {
@@ -195,24 +195,15 @@
   display: flex;
   width: 100%;
 }
-.product-wrapper
-  .product-item-prices-wrapper
-  .product-item-prices-item
-  .product-item-prices-label,
-.product-wrapper
-  .product-item-prices-wrapper
-  .product-item-prices-item
-  .product-item-prices-value {
+.product-wrapper .product-item-prices-wrapper .product-item-prices-item .product-item-prices-label,
+.product-wrapper .product-item-prices-wrapper .product-item-prices-item .product-item-prices-value {
   font-size: 14px;
   line-height: 18px;
   color: #000;
   background: 0 0;
   font-weight: bold;
 }
-.product-wrapper
-  .product-item-prices-wrapper
-  .product-item-prices-item
-  .product-item-prices-value {
+.product-wrapper .product-item-prices-wrapper .product-item-prices-item .product-item-prices-value {
   margin-left: auto;
 }
 .form {
@@ -233,7 +224,7 @@
   flex-direction: column;
   align-items: start;
 }
-.form input[type="text"],
+.form input[type='text'],
 .form select {
   border-color: #d9d9d9;
   border-radius: 5px;
@@ -315,7 +306,6 @@
 }
 .label-preview {
   width: 350px;
-  transform: rotate(180deg);
 }
 
 .label-preview-container {
