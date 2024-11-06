@@ -1,216 +1,188 @@
-import React, { useState } from "react";
-import "./App.css";
+import React, { useState } from 'react';
+import './App.css';
 
 function App() {
-  const countries = [{ name: "US", code: "US" }];
+  const countries = [{ name: 'US', code: 'US' }];
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    phone: "",
-    country: "US",
-    shippingMethod: "Standard",
+    name: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
+    phone: '',
+    country: 'US',
+    shippingMethod: 'Standard'
   });
 
-  const [label, setLabel] = useState("");
+  const [label, setLabel] = useState('');
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setError("");
-  };
-
-  const printImage = () => {
-    if (label) {
-      const printWindow = window.open(
-        document.getElementById("label-preview").src,
-        "_blank"
-      );
-      printWindow.onload = function () {
-        printWindow.print();
-      };
-    }
+    setError('');
   };
 
   const reset = () => {
     setFormData({
-      name: "",
-      address: "",
-      city: "",
-      state: "",
-      zip: "",
-      phone: "",
-      country: "US",
-      shippingMethod: "Standard",
+      name: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      phone: '',
+      country: 'US',
+      shippingMethod: 'Standard'
     });
-    setLabel("");
+    setLabel('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
-      formData.name === "" ||
-      formData.address === "" ||
-      formData.city === "" ||
-      formData.state === "" ||
-      formData.zip === "" ||
-      formData.phone === ""
+      formData.name === '' ||
+      formData.address === '' ||
+      formData.city === '' ||
+      formData.state === '' ||
+      formData.zip === '' ||
+      formData.phone === ''
     ) {
-      setError("Please fill in all the fields");
+      setError('Please fill in all the fields');
       return;
     }
 
+    setLoading(true);
+
     const data = {
-      Carrier: "Maersk",
+      Carrier: 'Maersk',
       ServiceType: formData.shippingMethod,
       UniqueRequestId: `MAACDEMO-${new Date().getTime()}`,
-      IntegratorClientID: "NETWORK PARCEL",
-      CustomText1: "custom-t1",
-      CustomText2: "custom-t2",
-      PreferredFormat: 2,
+      IntegratorClientID: 'NETWORK PARCEL',
+      CustomText1: 'custom-t1',
+      CustomText2: 'custom-t2',
+      PreferredFormat: 'PDF',
       PreferredSize: 0,
       PreferredDPI: 0,
-      ShipDate: "2024-04-31T16:58:40.409Z",
+      ShipDate: '2024-11-05T23:05:31.381Z',
       toAddress: {
         isResidential: true,
-        description: "To address",
-        id: "1",
         address1: formData.address,
-        address2: "",
-        address3: "",
+        address2: '',
+        address3: '',
         city: formData.city,
         stateProvince: formData.state,
         postalCode: formData.zip,
-        country: "US",
+        country: 'US',
         option: 0,
         name: formData.name,
-        company: "BodyGuardz",
+        company: 'BodyGuardz',
         phone: formData.phone,
-        email: "info@sample.com",
+        email: 'info@sample.com'
       },
       fromAddress: {
-        isResidential: false,
-        description: "from addr",
-        id: "string",
-        address1: "7280 Oakley Industrial Blvd",
-        address2: "",
-        address3: "",
-        city: "Fairburn",
-        stateProvince: "GA",
-        postalCode: "30213",
-        country: "US",
-        option: 0,
-        name: "Shipping Dept",
-        company: "Maersk",
-        phone: "513-346-3100",
-        email: "info@sample.com",
+        Name: 'Maersk',
+        Company: '',
+        Address1: '5370 HIGHWAY 92 STE 130',
+        Address2: '',
+        Address3: '',
+        City: 'Fairburn',
+        StateProvince: 'GA',
+        PostalCode: '45069',
+        Country: 'US',
+        Phone: '5132231024',
+        Email: 'test@indicium.com',
+        IsResidential: false
+      },
+      ReturnAddress: {
+        Name: 'Shipping Dept',
+        Company: 'Maersk',
+        Phone: '513-346-3100',
+        Email: 'info@sample.com',
+        IsResidential: true,
+        Description: '',
+        Id: 'string',
+        Address1: '70280 Okley Industrial blvd',
+        Address2: '',
+        Address3: '',
+        City: 'Fairburn',
+        StateProvince: 'GA',
+        PostalCode: '45069',
+        Country: 'US',
+        Option: 0
       },
       Packages: [
         {
           PackageNumber: 1,
-          PackageIdentifier: "MTRACKx=M3220311295492096",
-          Height: 16,
-          Length: 4,
-          Width: 1,
-          DimensionUnit: "IN",
-          Weight: 1,
-          WeightUnit: "LB",
+          PackageIdentifier: 'MTRACKx=M3220311295492096',
+          Height: 1.4,
+          Length: 1.8,
+          Width: 9.9,
+          DimensionUnit: 'IN',
+          Weight: 1.5,
+          WeightUnit: 'LB',
           PackageType: 0,
           Value: 0,
-          CurrencyCode: "USD",
-        },
+          CurrencyCode: 'USD'
+        }
       ],
-      Options: {},
-      CustomsInfo: null,
+      Options: {
+        OriginSortCenterCode: 'ORD'
+      }
     };
 
     try {
       const response = await fetch(
-        "https://viprs-indicium-sandbox.azurewebsites.net/api/XYNGULAR/ShippingLabel",
+        'https://viprs-indicium-sandbox.azurewebsites.net/api/Bodyguardz/ShippingLabel',
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Cookie:
-              "ARRAffinity=13673d48a5a129d46ca17ebde23192c9909d356fbe3a23654c2a7fe603495bcb; ARRAffinitySameSite=13673d48a5a129d46ca17ebde23192c9909d356fbe3a23654c2a7fe603495bcb",
+              'ARRAffinity=13673d48a5a129d46ca17ebde23192c9909d356fbe3a23654c2a7fe603495bcb; ARRAffinitySameSite=13673d48a5a129d46ca17ebde23192c9909d356fbe3a23654c2a7fe603495bcb'
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(data)
         }
       );
 
       if (!response.ok) {
-        setError(
-          "An error occurred while generating the label. Please try again later."
-        );
+        setError('An error occurred while generating the label. Please try again later.');
         return;
       }
 
       const result = await response.json();
-      console.log("result", result);
-      console.log("result package", result["package"]);
 
       if (
         !(
           result &&
-          result["package"] &&
-          result["package"].length > 0 &&
-          result["package"][0]["labels"] &&
-          result["package"][0]["labels"].length > 0 &&
-          result["package"][0]["labels"][0]["label"]
+          result['package'] &&
+          result['package'].length > 0 &&
+          result['package'][0]['labels'] &&
+          result['package'][0]['labels'].length > 0 &&
+          result['package'][0]['labels'][0]['label']
         )
       ) {
-        console.log("Did not get label");
-        setError(
-          "An error occurred while generating the label. Please try again later."
-        );
+        console.log('Did not get label');
+        setError('An error occurred while generating the label. Please try again later.');
         return;
       }
 
-      const encodedLabel = result["package"][0]["labels"][0]["label"];
-      console.log("encodedLabel", encodedLabel);
-      const label = atob(encodedLabel);
-      console.log("label", label);
-
-      const labelImageResponse = await fetch(
-        `https://api.labelary.com/v1/printers/8dpmm/labels/4x6/0/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: JSON.stringify(label),
-        }
-      );
-
-      if (!labelImageResponse.ok) {
-        console.log("Did not get label image");
-        setError(
-          "An error occurred while generating the label. Please try again later."
-        );
-        return;
-      }
-
-      const labelImageBlob = await labelImageResponse.blob();
-      const labelImageUrl = URL.createObjectURL(labelImageBlob);
-      console.log("labelImageUrl", labelImageUrl);
-      setLabel(labelImageUrl);
+      const encodedLabel = result['package'][0]['labels'][0]['label'];
+      setLoading(false);
+      setLabel(encodedLabel);
     } catch (error) {
-      setError(
-        "An error occurred while generating the label. Please try again later."
-      );
+      setLoading(false);
+      setError('An error occurred while generating the label. Please try again later.');
       return;
     }
   };
 
   return (
     <div className="App">
-      {label === "" ? (
+      {label === '' ? (
         <div className="checkout-wrapper">
           <div className="header">
             <img
@@ -222,9 +194,7 @@ function App() {
           </div>
           <div className="checkout-content">
             <div className="form-wrapper">
-              <div className="navigation">
-                {"Cart > Shipping > Payment > Order review"}
-              </div>
+              <div className="navigation">{'Cart > Shipping > Payment > Order review'}</div>
               <div className="form">
                 <h1 className="form-title">Shipping Address</h1>
                 <form onSubmit={handleSubmit} className="form-wrapper">
@@ -305,7 +275,7 @@ function App() {
                           id="standard"
                           name="shippingMethod"
                           value="Standard"
-                          checked={formData.shippingMethod === "Standard"}
+                          checked={formData.shippingMethod === 'Standard'}
                           onChange={handleChange}
                         />
                         <label htmlFor="standard">
@@ -315,21 +285,21 @@ function App() {
                       <div>
                         <input
                           type="radio"
-                          id="express"
+                          id="expedited"
                           name="shippingMethod"
-                          value="Express"
-                          checked={formData.shippingMethod === "Express"}
+                          value="Expedited"
+                          checked={formData.shippingMethod === 'Expedited'}
                           onChange={handleChange}
                         />
-                        <label htmlFor="express">
-                          Maersk Express <div className="price">($22.95)</div>
+                        <label htmlFor="expedited">
+                          Maersk Expedited <div className="price">($22.95)</div>
                         </label>
                       </div>
                     </div>
                   </div>
                   {error && <div className="error">{error}</div>}
-                  <button type="submit" className="form-submit">
-                    Submit
+                  <button type="submit" className="form-submit" disabled={loading}>
+                    {loading ? <span class="smooth spinner" /> : 'Submit'}
                   </button>
                 </form>
               </div>
@@ -356,13 +326,9 @@ function App() {
                   <div className="product-item-prices-value">$49.95</div>
                 </div>
                 <div className="product-item-prices-item">
-                  <div className="product-item-prices-label">
-                    Shipping and Handling
-                  </div>
+                  <div className="product-item-prices-label">Shipping and Handling</div>
                   <div className="product-item-prices-value">
-                    {formData.shippingMethod === "Express"
-                      ? "$22.95"
-                      : "$12.90"}
+                    {formData.shippingMethod === 'Expedited' ? '$22.95' : '$12.90'}
                   </div>
                 </div>
                 <div className="product-item-prices-item">
@@ -373,9 +339,9 @@ function App() {
               <div className="product-total-wrapper">
                 <div className="product-total-label">Total</div>
                 <div className="product-total-value">
-                  {formData.shippingMethod === "Express"
-                    ? "$" + (49.95 + 22.95)
-                    : "$" + (49.95 + 12.9)}
+                  {formData.shippingMethod === 'Expedited'
+                    ? '$' + (49.95 + 22.95)
+                    : '$' + (49.95 + 12.9)}
                 </div>
               </div>
             </div>
@@ -385,20 +351,18 @@ function App() {
         <div className="label-preview-wrapper">
           <div className="label-title">
             <button className="label-back" onClick={() => reset()}>
-              {"<"}
+              {'<'}
             </button>
             Label Preview
           </div>
           <div className="label-preview-container">
-            <img
-              id="label-preview"
-              src={label}
+            <object
+              type="application/pdf"
+              data={`data:application/pdf;base64,${label}`}
               className="label-preview"
-              alt="label"
-            />
-            <button className="label-print" onClick={() => printImage()}>
-              🖨️
-            </button>
+            >
+              PDF
+            </object>
           </div>
         </div>
       )}

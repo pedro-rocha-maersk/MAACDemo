@@ -243,20 +243,31 @@
   width: 95%;
 }
 .form .form-submit {
-  padding: 19.6px 23.8px;
+  padding: 14px;
   width: auto;
   font-weight: 500;
   font-size: 14px;
   border-radius: 5px !important;
   background: #000;
   margin-top: 16px;
-  font: 18px;
   color: white;
   letter-spacing: 1px;
-  padding: 13px 0 10px;
-  width: 150px;
+  min-width: 150px;
   margin-bottom: 32px;
+  height: 36px;
+  box-shadow: none !important;
+  outline: 0px !important;
+  border: 0px !important;
+  position: relative;
 }
+
+.form .form-submit:disabled,
+.form .form-submit:disabled:hover {
+  background: #9b9b9b !important;
+  border-color: #9b9b9b !important;
+  cursor: not-allowed;
+}
+
 .form .form-submit:hover {
   background: #373737 !important;
   cursor: pointer;
@@ -306,12 +317,13 @@
 }
 .label-preview {
   width: 350px;
+  height: 550px;
 }
 
 .label-preview-container {
   display: flex;
   width: 100%;
-  margin-top: 64px;
+  margin-top: 32px;
   justify-content: center;
 }
 .label-print {
@@ -324,4 +336,27 @@
   border-radius: 5px;
   font-size: 15px;
   cursor: pointer;
+}
+.spinner::after {
+  content: '';
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: calc(50% - 12px);
+  left: calc(50% - 12px);
+  border-radius: 50%;
+}
+
+.spinner.smooth::after {
+  border-top: 4px solid rgba(255, 255, 255, 1);
+  border-left: 4px solid rgba(255, 255, 255, 1);
+  border-right: 4px solid rgba(255, 255, 255, 0);
+  animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
 }
