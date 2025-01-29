@@ -136,7 +136,7 @@ function App() {
 
     try {
       const response = await fetch(
-        'https://viprs-indicium-sandbox.azurewebsites.net/api/Bodyguardz/ShippingLabel',
+        'https://viprs-indicium-sandbox.azurewebsites.net/api/Bryan_Test/ShippingLabel',
         {
           method: 'POST',
           headers: {
