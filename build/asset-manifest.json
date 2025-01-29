@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/MAACDemo/static/css/main.0303342c.css",
-    "main.js": "/MAACDemo/static/js/main.4c3e2463.js",
+    "main.css": "/MAACDemo/static/css/main.17693d64.css",
+    "main.js": "/MAACDemo/static/js/main.ceda0f8d.js",
     "static/js/453.29c53142.chunk.js": "/MAACDemo/static/js/453.29c53142.chunk.js",
     "index.html": "/MAACDemo/index.html",
-    "main.0303342c.css.map": "/MAACDemo/static/css/main.0303342c.css.map",
-    "main.4c3e2463.js.map": "/MAACDemo/static/js/main.4c3e2463.js.map",
+    "main.17693d64.css.map": "/MAACDemo/static/css/main.17693d64.css.map",
+    "main.ceda0f8d.js.map": "/MAACDemo/static/js/main.ceda0f8d.js.map",
     "453.29c53142.chunk.js.map": "/MAACDemo/static/js/453.29c53142.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0303342c.css",
-    "static/js/main.4c3e2463.js"
+    "static/css/main.17693d64.css",
+    "static/js/main.ceda0f8d.js"
   ]
 }

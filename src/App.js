@@ -67,7 +67,7 @@ function App() {
       PreferredFormat: 'PDF',
       PreferredSize: 0,
       PreferredDPI: 0,
-      ShipDate: '2024-05-20T23:05:31.381Z',
+      ShipDate: '2024-05-01T23:05:31.381Z',
       toAddress: {
         isResidential: true,
         address1: formData.address,
